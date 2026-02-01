@@ -20,7 +20,7 @@ p {
   font-size: 15;
 }
 
-#linkBar {
+.linkBar {
   background-color: black;
   font-size: 25;
   color: white;

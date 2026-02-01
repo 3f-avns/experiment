@@ -20,6 +20,12 @@ p {
   font-size: 15;
 }
 
+#linkBar {
+  background-color: black;
+  font-size: 25;
+  color: white;
+}
+
 .header {
   font-size: 45;
 }

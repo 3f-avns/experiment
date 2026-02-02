@@ -19,7 +19,15 @@ h4 {
 p {
   font-size: 15;
 }
-
+a {
+ color: white; 
+}
+a:visited {
+ color: lightgrey; 
+}
+a:hover {
+  font-size: 30;
+}
 .linkBar {
   background-color: black;
   font-size: 25;
@@ -28,7 +36,6 @@ p {
   padding: 5;
   margin: 0;
 }
-
 .header {
   font-size: 45;
 }

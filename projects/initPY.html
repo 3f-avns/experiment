@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Python project launcher - Init.py</title>
+        <link rel="stylesheet" href="src/css/style.css">
+        <link rel='shortcut icon' href='src/img/satyr_noBG.png' type='image/x-icon'>
+    </head>
+    <body>
+        <div id="barHeader">
+            <div class="row">
+                <div class="barOne"><img src="src/img/Satyr.png", width="50"> ?avns.tutel.dev</div>
+                <div class="barTwo"></div>
+                <div class="barThree"></div>
+            </div>
+        </div>
+        <div class="pageHeader">
+            <img src="src/img/satyrHornLeft.png", id="leftHorn"><div id="pHtext">Python Project Launcher - Init.py</div><img src="src/img/satyrHornRight.png", id="rightHorn">
+        </div>
+import ntpath
+import sys
+import os
+
+filePath = ntpath.dirname(sys.argv[0]) + "//"
+# This project is made to launch other python projects, than import them
+# Each project will be marked in their own folder
+# Because this file will create and write the files, they will be stored in variables, so that they can be easily accessed, while taking up less space
+# The format for this will be;
+#-- PROJECT NAME --#
+# filenameEXTENTION = '''contents'''
+# Finished projects are:
+# Command Line Interface
+# Unfinished projects are:
+# Text Based Game
+
+#-- Command Line Interface --# 
+cliPY = ''' # importations
+
+import datetime
+from datetime import datetime
+import sys
+import ntpath
+import random
+
+# variables
+
+filePath = ntpath.dirname(sys.argv[0])
+tiem = datetime.now()
+run_config = ["no service password-encryption", "!", "hostname Switch", "!", "!", "!", "!", "interface FastEthernet0/1", "!", "!", "interface FastEthernet0/2", "!", "!", "interface FastEthernet0/3", "!", "!", "interface FastEthernet0/4", "!", "!", "interface GigabitEthernet0/1", "!", "!", "interface GigabitEthernet0/2", "!", "!", "interface vlan1", " no ip address", " shutdown", "!", "!", "line con 0", "!", "!", "line vty 0 4", "!", "login", "!", "!", "!", "end"]
+scene = ""
+hostname = "Switch"
+mode = ">"
+conf = ["", 0, "", 0, 0, "", 0, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+startup = 0
+ipadr = ""
+subnt = ""
+
+def interface():
+    global mode
+    global conf
+    if command[1] == "fa0/1":
+        conf[9] = 1
+        mode = "#(config-if)"
+    elif command[1] == "fa0/2":
+        conf[11] = 1
+        mode = "#(config-if)"
+    elif command[1] == "fa0/3":
+        conf[13] = 1
+        mode = "#(config-if)"
+    elif command[1] == "fa0/4":
+        conf[15] = 1
+        mode = "#(config-if)"
+    elif command[1] == "gig0/1":
+        conf[17] = 1
+        mode = "#(config-if)"
+    elif command[1] == "gig0/2":
+        conf[19] = 1
+        mode = "#(config-if)"
+    elif command[1] == "vlan1":
+        conf[21] = 1
+        mode = "#(config-if)"
+    elif command[1] == "console":
+        conf[1] = 1
+        mode = "#(config-line)"
+    elif command[1] == "vty":
+        conf[4] = 1
+        mode = "#(config-line)"
+
+def ipAddrChange(interface):
+    global conf
+    if conf[9] == 1:
+        interface = 8
+    if conf[11] == 1:
+        interface = 11
+    if conf[13] == 1:
+        interface = 14
+    if conf[15] == 1:
+        interface = 17
+    if conf[17] == 1:
+        interface = 20
+    if conf[19] == 1:
+        interface = 23
+    if conf[21] == 1:
+        interface = 26
+    ipadr = command[2].split(".")
+    subnt = command[3].split(".")
+    if len(command) < 4:
+        print("Invalid Command")
+    elif len(ipadr) != 4:
+        print("Invalid Command")
+    elif len(subnt) != 4:
+        print("Invalid Command")
+    else:
+        run_config[interface] = "ip address: " + command[2]
+        run_config[interface + 1] = "subnet mask: " + command[3]
+
+def init():
+    global command
+    global scene
+    global conf
+    global tiem
+    global startup
+    with open(filePath + "//" + "cliYap.txt", "r", encoding = "utf-8") as cliYap:
+        print(cliYap.read())
+    print("CLI version 1.2.00; Excecuted at:", tiem.time(), "\\n\\n")
+#    print("\\n", sys.argv[0], "\\n", ntpath.dirname(sys.argv[0]), "\\n\\n")
+    if conf[2] == "":
+        print("Press [ENTER] to start")
+        startup = input()
+        if startup == "":
+            print("""You will be instructed to complete one of three scenarios. In due time, you will complete all three
+scenarios. Which scenario have you been instructed to complete?""")
+            scene = input("Scenario>")
+            if scene == "1" or scene == "2" or scene == "3":
+                with open(filePath + "//" + "scenario_0" + str(scene) + "_readme.txt", "r", encoding="utf-8") as sc:
+                    print(sc.read())
+            else:
+                print("Please enter a value 1 to 3")
+                scene = input("Scenario>")
+                if scene == "1" or scene == "2" or scene == "3":
+                    with open(filePath + "//" + "scenario_0" + str(scene) + "_readme.txt", "r", encoding="utf-8") as sc:
+                        print(sc.read())
+                else:
+                    print("Please enter a value 1 to 3 \\nIf you fail to do so one more time, the program shall restart")
+                    scene = input("Scenario>")
+                    if scene == "1" or scene == "2" or scene == "3":
+                        with open(filePath + "//" + "scenario_0" + str(scene) + "_readme.txt", "r", encoding="utf-8") as sc:
+                            print(sc.read())
+                    else:
+                        init()
+    else:
+        conf[7] = input("password:")
+        if conf[7] != conf[2]:
+            print("Incorrect Password\\n\\n\\n")
+            conf[7] = input("password: ")
+            if conf[7] != conf[2]:
+                print("Incorrect Password\\n\\n\\n")
+                conf[7] = input("password: ")
+                if conf[7] != conf[2]:
+                    init()
+    while True:
+        user_input = input(f"{hostname}{mode}")
+        command = user_input.split(" ")
+        intComs()
+
+def intComs():
+    global hostname
+    global command
+    global conf
+    global mode
+    meow1 = ""
+    meow2 = ""
+
+    if len(command[0]) <= 3:
+        if command[0] == "ip" and command[1] == "address" and mode == "#(config-if)":
+            ipAddrChange(0)
+        if command[0] == "int" and mode == "#(config)":
+            interface()
+        if command[0] == "no" and command[1] == "shutdown" and mode == "#(config-if)":
+            if conf[9] == 1:
+                conf[10] = 1
+            if conf[11] == 1:
+                conf[12] = 1
+            if conf[13] == 1:
+                conf[14] = 1
+            if conf[15] == 1:
+                conf[16] = 1
+            if conf[17] == 1:
+                conf[18] = 1
+            if conf[19] == 1:
+                conf[20] = 1
+            if conf[21] == 1:
+                conf[22] = 1
+    if len(command[0]) >= 4:
+        if command[0] == 'meow' and mode == ">":
+            meow1 = ["meow!", "maow", "mew!", "mrrp", "mraow~"]
+            meow2 = [":3", ";3", "X3"]
+            print(f"{meow1[random.randint(0,4)]} {meow2[random.randint(0,2)]}")
+        if command[0] == "line" and mode == "#(config)":
+            interface()
+        if command[0] == "exit":
+            if mode == "#":
+                mode = ">"
+            elif mode == "#(config)":
+                mode = "#"
+            elif mode == "#(config-if)":
+                mode = "#(config)"
+                conf[9] = 0
+                conf[11] = 0
+                conf[13] = 0
+                conf[15] = 0
+                conf[17] = 0
+                conf[19] = 0
+                conf[21] = 0
+            elif mode == "#(config-line)":
+                mode = "#(config)"
+                conf[1] = 0
+                conf[4] = 0
+            elif mode == ">":
+                init()
+            else:
+                print("""You have encountered a bug in the code. Please report any bugs to rdrutzky@students.wcpss.net
+You will now be routed back to the initial screen""")
+                init()
+        if command[0] == "conf" and mode == "#":
+            if command[1] == "t" or command[1] == "te" or command[1] == "ter" or command[1] == "term" or command[1] == "termi" or command[1] == "termin" or command[1] == "termina" or command[1] == "terminal":
+                print("Enter configuration commands, one per line. End with the command \'exit\'")
+                mode = "#(config)"
+    if command[0] == "login" and mode == "#(config-line)":
+        if conf[1] == 1:
+            conf[3] = 2
+            run_config[31] = "password " + str(conf[2])
+            run_config[32] = "login"
+        else:
+            conf[2] = ""
+            if conf[4] == 1:
+                conf[6] = 2
+                run_config[34] = "password " + str(conf[5])
+                run_config[35] = " login"
+            else:
+                print("invalid command usage")
+                conf[5] = ""
+    if len(command[0]) >= 6:
+        if len(command) == 1:
+            if command[0] == "enable" and mode == ">":
+                mode = "#"
+        else:
+            if command[0] == "enable" and command[1] == "secret" and mode == "#(config)":
+                conf[0] = command[2].encode().hex()
+                run_config[4] = "enable secret " + conf[0]
+    if len(command[0]) >= 7:
+        if command[0] == "service" and command[1] == "password-encryption" and mode == "#(config)":
+            if run_config[31] != "!":
+                lineCon0Pass = run_config[31].split(" ")
+                lineCon0Pass[1] = lineCon0Pass[1].encode().hex()
+                run_config[31] = lineCon0Pass
+            if run_config[34] != "!":
+                lineVTY04Pass = run_config[34].split(" ")
+                lineVTY04Pass[1] = lineVTY04Pass[1].encode().hex()
+                run_config[34] = lineVTY04Pass
+    if len(command[0]) >= 8:
+        if command[0] == "hostname":
+            hostname = command[1]
+            run_config[3] = "hostname " + hostname
+        if command[0] == "security":
+            if command[1] + command[2] == "password min-length":
+                conf[8] = command[3]
+        if command[0] == "password":
+            if conf[1] == 1:
+                conf[2] = command[1].encode().hex()
+                conf[3] = 1
+            if conf[4] == 1:
+                conf[5] = command[1].encode().hex()
+                conf[6] = 1
+    if command[0] == "interface" and mode == "#(config)":
+        interface()
+    if len(command[0]) >= 10:
+        if command[0] == "scenarioCheck":
+            with open(filePath + "//" + "scenario_0" + str(scene) + "_config.txt", "r", encoding="utf-8") as f:
+                data = f.read().strip()
+                if data == str(run_config):
+                    if scene == "1" and conf[10] == 0 and conf[12] == 1 and conf[14] == 0 and conf[16] == 1 and conf[18] == 0 and conf[20] == 0 and conf[22] == 1:
+                        print("you have completed this scenario")
+                    else:
+                        print("you have not completed this scenario. Make sure to set only the used ports to 'up'")
+                    if scene == "2" and conf[10] == 1 and conf[12] == 0 and conf[14] == 0 and conf[16] == 0 and conf[18] == 0 and conf[20] == 0 and conf[22] == 1:
+                        print("you have completed this scenario")
+                    else:
+                        print("you have not completed this scenario. Make sure to set only the used ports to 'up'")
+                    if scene == "3" and conf[10] == 0 and conf[12] == 0 and conf[14] == 0 and conf[16] == 0 and conf[18] == 0 and conf[20] == 0 and conf[22] == 1:
+                        print("you have completed this scenario")
+                    else:
+                        print("you have not completed this scenario. Make sure to set only the used ports to 'up'")
+                else:
+                    print("you have not completed this scenario")
+    if command[0] == "show":
+        print(run_config[0], "\\n", run_config[1], "\\n", run_config[2], "\\n", run_config[3], "\\n", run_config[4], "\\n", run_config[5], "\\n", run_config[6], "\\n", run_config[7], "\\n",run_config[8], "\\n", run_config[9], "\\n", run_config[10], "\\n", run_config[11], "\\n", run_config[12], "\\n", run_config[13], "\\n",run_config[14], "\\n", run_config[15], "\\n", run_config[16], "\\n", run_config[17], "\\n", run_config[18], "\\n", run_config[19], "\\n", run_config[20], "\\n", run_config[21], "\\n", run_config[22], "\\n", run_config[23], "\\n", run_config[24], "\\n", run_config[25], "\\n", run_config[26], "\\n", run_config[27], "\\n", run_config[28], "\\n", run_config[29], "\\n", run_config[30], "\\n", run_config[31], "\\n", run_config[32], "\\n", run_config[33], "\\n", run_config[34], "\\n", run_config[35], "\\n", run_config[36], "\\n", run_config[37], "\\n", run_config[38], "\\n", run_config[39], "\\n")
+    if command[0] == "print":
+        eval("print(" + str(command[1]) + ")")
+    if command[0] == "func":
+        eval(str(command[1]))'''
+cliYapTXT = '''This IOS CLI created by ?avns and Turtle Boi. Development started on 12/4/2025. Development has ended.
+Looty_9397 (Helped with code debugging)
+There are currently no other contributors
+
+This CLI is modeled based off of the cisco 2960-24TT switch. you may enter in commands like a normal cisco CLI or IOS
+Despite being modeled after the cisco IOS CLI, you cannot at this point in time shorten commands. for commands, there
+will be a list below of how you are allowed to shorten them. Square brackets; [] will represent parts of the command
+that can be shortened. The commands are in no particular order
+Configure Terminal : conf [terminal]
+exit : exit | enable : enable | security password min-length _ : security password min-length _ | hostname __ : hostname __
+interface __/__ : int __/__ | line console 0 : line console 0 | line vty 0 4 : line vty 0 4 | password ___ : password ___
+login : login | enable secret : enable secret |ip address __.__.__.__ __.__.__.__ : ip address __.__.__.__ __.__.__.__
+!! THE IP ADDRESS COMMAND CANNOT BE SHORTENED, OR THE PROGRAM WILL RAISE AN ERROR !!
+show run / start : show (only shows running config in v1.1.05) | service password-encryption : service password-encryption
+More commands may be added in future versions
+There are 6 ports; Fa0/1-4, Gig0/1-2, and Vlan1, and 4 vty lines.
+
+!! IMPORTANT !!
+For some reason, the scenarioCheck command has a chance to NOT show if you are done correctly. Please call over your administrator to check if your work is completed'''
+scenario_01_configTXT = "['no service password-encryption', '!', 'hostname Switch', '!', 'enable secret 336e40626c33', '!', '!', 'interface FastEthernet0/1', '!', '!', 'interface FastEthernet0/2', 'ip address: 96.242.136.254', 'subnet mask: 255.255.255.224', 'interface FastEthernet0/3', '!', '!', 'interface FastEthernet0/4', 'ip address: 96.242.136.253', 'subnet mask: 255.255.255.224', 'interface GigabitEthernet0/1', '!', '!', 'interface GigabitEthernet0/2', '!', '!', 'interface vlan1', 'ip address: 96.242.136.226', 'subnet mask: 255.255.255.224', '!', '!', 'line con 0', 'password 7040737363306433', 'login', 'line vty 0 4', 'password 7040737363306433', ' login', '!', '!', '!', 'end']"
+scenario_01_readmeTXT = '''This is the first of 3 scenarios you are to be given. Make sure to read this carefully. All you are doing is setting up a switch on a network. You dont even have to run connectivity tests! All you need to do is enter in the commands to achieve the desired configuration. You may be given multiple interfaces to input IP addresses on. These IP addreses will only be IPv4 addresses. When you are done configuring, enter in the command 'scen1check'. The program shall give the exact time when you checked your configuration. It should then check if you have configured everything correctly. Do not configure anything more than what is required.
+Required configuration:
+Network Addr. :
+96.242.136.0 /24
+
+You have been requested to configure a switch that is in the fourth subnet of this network
+The other subnets have:
+72 hosts;
+49 hosts;
+26 hosts;
+
+Your subnet has 21 hosts. you need to configure 2 hosts to ports FastEthernet0/2, and FastEthernet0/4.
+You also need to configure 'Vlan1'
+
+Give the switch the hostname 'Subnet.D_Sw-1'
+Use the password "p@ssc0d3" for the console and vty lines
+Use the enable secret "3n@bl3"
+Dont enable plain text password encryption, this CLI does it automatically
+
+Give the second IPv4 address in the range to 'Vlan1'
+Give the last 2 IPv4 addresses to the interfaces with hosts on them
+FastEthernet0/2 should get the last IPv4 address
+FastEthernet0/4 should get the second to last IPv4 address'''
+scenario_02_configTXT = "['no service password-encryption', '!', 'hostname Switch', '!', 'enable secret 636c407373', '!', '!', 'interface FastEthernet0/1', 'ip address: 100.20.188.206', 'subnet mask: 255.255.255.240', 'interface FastEthernet0/2', '!', '!', 'interface FastEthernet0/3', '!', '!', 'interface FastEthernet0/4', '!', '!', 'interface GigabitEthernet0/1', '!', '!', 'interface GigabitEthernet0/2', '!', '!', 'interface vlan1', 'ip address: 100.20.188.193', 'subnet mask: 255.255.255.240', '!', '!', 'line con 0', 'password 6331736330', 'login', 'line vty 0 4', 'password 6331736330', ' login', '!', '!', '!', 'end']"
+scenario_02_readmeTXT = '''This is the second of 3 scenarios you are to be given. Make sure to read this carefully. All you are doing is setting up a switch on a network. You dont even have to run connectivity tests! All you need to do is enter in the commands to achieve the desired configuration. You may be given multiple interfaces to input IP addresses on. These IP addreses will only be IPv4 addresses. When you are done configuring, enter in the command 'scenarioCheck'. The program shall give the exact time when you checked your configuration. It should then check if you have configured everything correctly. Do not configure anything more than what is required.
+
+Required configuration:
+Network Addr. :
+100.20.188.0 /24
+
+You have been requested to configure a switch that is in the third subnet of this network
+The other subnets have:
+86 hosts;
+54 hosts;
+8 hosts;
+
+Your subnet has 13 hosts. you need to configure 1 host to interface FastEthernet0/1.
+You also need to configure 'Vlan1'
+
+Give the switch the hostname 'Sw-C1'
+Use the password "c1sc0" for the console and vty lines
+Use the enable secret "cl@ss"
+Enable plain text password encryption
+
+Give the second IPv4 address in the range to 'Vlan1'
+Give the last IPV4 addresses to interface FastEthernet0/1'''
+scenario_03_configTXT = "['no service password-encryption', '!', 'hostname Switch', 'hostname Sc_03-Sw1', 'enable secret 4d732e4a65626572616a526d323533', '!', '!', 'interface FastEthernet0/1', '!', '!', 'interface FastEthernet0/2', '!', '!', 'interface FastEthernet0/3', '!', '!', 'interface FastEthernet0/4', '!', '!', 'interface GigabitEthernet0/1', '!', '!', 'interface GigabitEthernet0/2', '!', '!', 'interface vlan1', 'ip address: 192.168.37.34', 'subnet mask: 255.255.255.224', '!', '!', 'line con 0', 'password 57616b6554656368525450', 'login', 'line vty 0 4', 'password 57616b6554656368525450', ' login', '!', '!', '!', 'end']"
+scenario_03_readmeTXT = '''This is the third of 3 scenarios you are to be given. Make sure to read this carefully. All you are doing is setting up a switch on a network. You dont even have to run connectivity tests! All you need to do is enter in the commands to achieve the desired configuration. You may be given multiple interfaces to input IP addresses on. These IP addreses will only be IPv4 addresses. When you are done configuring, enter in the command 'scenarioCheck'. The program shall give the exact time when you checked your configuration. It should then check if you have configured everything correctly. Do not configure anything more than what is required.
+
+Required configuration:
+Network Addr. :
+192.168.37.0 /24
+
+You have been requested to configure a switch that is in the second subnet of this network
+The other subnets have:
+27 hosts;
+9 hosts;
+
+Your subnet has 12 hosts. you do NOT need to configure and host interfaces. 
+You only need to configure 'Vlan1'
+
+Give the switch the hostname 'Sc_03-Sw1'
+Use the password "WakeTechRTP" for the console and vty lines
+Use the enable secret "Ms.JeberajRm253"
+Dont enable plain text password encryption, the CLI does it for you :D
+
+Give the second IPv4 address in the range to 'Vlan1'
+Give the last IPV4 addresses to interface FastEthernet0/1'''
+cliReadMeTXT = f'''This project was created from {ntpath.dirname(sys.argv[0]) + "//" + ntpath.basename(sys.argv[0])}
+Project created by: ?avns
+Additional notes:
+Project instructions are in the project. To get more experience with networking beforehand, go to netacad.com'''
+
+#-- Text Based Game --#
+
+textBasedGamePY = '''# Importations
+import random
+import ntpath
+import sys
+import time
+from Projects import modulus
+import merchant
+
+# Variables
+
+filePath = ntpath.dirname(sys.argv[0])
+
+turn = 0 # 0 = turn happening, 1 = turn over, 2 = enemy turn
+
+statsTimer = 5
+
+name = "" # player name
+
+weapons = [0, "", 0, "", 0, "", 0, "", 0] # Weapon count (max of 4), weapon 1 name, weapon 1 damage, weapon 2 name, weapon 2 damage, weapon 3 name, weapon 3 damage, weapon 4 name, weapon 4 damage
+shields = [0, "", 0, "", 0, "", 0, "", 0] # Shield / Defensive instrument count (max of 4), shield 1 name, shield 1 defense, shield 2 name, shield 2 defense, shield 3 name, shield 3 defense, shield 4 name, shield 4 defense
+
+playerInput = "" # what a player decides to do
+
+health = 10 # health points
+observation = 5 # how aware you are
+attack = 2 # how much attack damage you do
+priority = 1 # determines attack priority in a fight, for who attacks first
+defense = 0 # the amount of damage you CAN block
+
+opponentName = ""
+opponentStats = [0,0,0,0,0,0] # health, observation, attack, priority, defense, distance, attacking y/n
+
+def scroll_text(text, end, delay):
+    for char in text:
+        print(char, end="", flush=True)
+        time.sleep(delay)
+    print(end, end="", flush=True)
+
+def init():
+    global name
+    print("\\nWelcome to this world\\nWhat is your name?")
+    name = input()
+    print("Welcome, " + name + "\\nWe wish you luck in your short life")
+    
+    gameLoop(1)
+
+def specificInput(specificInput1, t):
+    if playerInput != specificInput1:
+        print("To continue with the " + str(t) + ", please enter the word '" + specificInput1 + "'. The input is case sensitive")
+        inputs("")
+        specificInput(specificInput1, t)
+
+def atk(dmg):
+    damage = random.randint(dmg - 1, dmg + 1)
+    opponentStats[0] -= damage
+    print("You attacked " + str(opponentName) + "for " + damage + " health")
+
+def defendAttack(blockDmg):
+    global health
+    blockDamage = random.randint(blockDmg - 1, blockDmg + 1)
+    damageTaken = opponentStats[2] - blockDamage
+    a = random.randint(0,100)
+    b = random.randint(0,100)
+    c = random.randint(0,100)
+    if a == b and a == c:
+        damageTaken = 0
+    health -= damageTaken
+    if damageTaken == 0:
+        print("You successfully blocked the " + opponentName + "'s attack")
+
+def mainInputs(): # interprets all the different stuff that you can enter in
+    global playerInput
+    global turn
+    global weapons
+    match playerInput: # one word inputs, all end the turn
+        case "Attack":
+            if weapons[0] == 0:
+                print("You do not have any weapons, as such you will attack with your basic attack value")
+                atk(attack)
+            else:
+                print("Which weapon would you like to attack with?")
+                match weapons[0]:
+                    case 1:
+                        print("Enter the weapon name to attack with that weapon. Your weapons are listed below:\\n'" + weapons[1] + "', " + weapons[2] + " damage\\n'Bare Hands', " + attack + " damage")
+                        inputs("The input is case sensitive. keep that in mind\\n")
+                        if playerInput == str(weapons[1]):
+                            atk(weapons[2])
+                        elif playerInput == "Bare Hands":
+                            atk(attack)
+                        else:
+                            while playerInput != str(weapons[1]) and playerInput != str(weapons[3]):
+                                print("Enter the weapon name to attack with that weapon. Your weapons are listed below:\\n'" + weapons[1] + "', " + weapons[2] + " damage\\n'" + weapons[3] + "', " + weapons[4] + " damage\\n'Bare Hands', " + attack + " damage")
+                                inputs("The input is case sensitive. keep that in mind\\n")
+                            if playerInput == str(weapons[1]):
+                                atk(weapons[2])
+                            elif playerInput == "Bare Hands":
+                                atk(attack)
+                    case 2:
+                        print("Enter the weapon name to attack with that weapon. Your weapons are listed below:\\n'" + weapons[1] + "', " + weapons[2] + " damage\\n'" + weapons[3] + "', " + weapons[4] + " damage\\n'Bare Hands', " + attack + " damage")
+                        inputs("The input is case sensitive. keep that in mind\\n")
+                        if playerInput == str(weapons[1]):
+                            atk(weapons[2])
+                        elif playerInput == str(weapons[3]):
+                            atk(weapons[4])
+                        elif playerInput == "Bare Hands":
+                            atk(attack)
+                        else:
+                            while playerInput != str(weapons[1]) and playerInput != str(weapons[3]):
+                                print("Enter the weapon name to attack with that weapon. Your weapons are listed below:\\n'" + weapons[1] + "', " + weapons[2] + " damage\\n'" + weapons[3] + "', " + weapons[4] + " damage\\n'Bare Hands', " + attack + " damage")
+                                inputs("The input is case sensitive. keep that in mind\\n")
+                            if playerInput == str(weapons[1]):
+                                atk(weapons[2])
+                            elif playerInput == str(weapons[3]):
+                                atk(weapons[4])
+                            elif playerInput == "Bare Hands":
+                                atk(attack)
+                    case 3:
+                        print("Enter the weapon name to attack with that weapon. Your weapons are listed below:\\n'" + weapons[1] + "', " + weapons[2] + " damage\\n'" + weapons[3] + "', " + weapons[4] + " damage\\n'" + weapons[5] + "', " + weapons[6] + " damage\\n'Bare Hands', " + attack + " damage")
+                        inputs("The input is case sensitive. keep that in mind\\n")
+                        if playerInput == str(weapons[1]):
+                            atk(weapons[2])
+                        elif playerInput == str(weapons[3]):
+                            atk(weapons[4])
+                        elif playerInput == str(weapons[5]):
+                            atk(weapons[6])
+                        elif playerInput == "Bare Hands":
+                            atk(attack)
+                        else:
+                            while playerInput != str(weapons[1]) and playerInput != str(weapons[3]) and playerInput != str(weapons[5]):
+                                print("Enter the weapon name to attack with that weapon. Your weapons are listed below:\\n'" + weapons[1] + "', " + weapons[2] + " damage\\n'" + weapons[3] + "', " + weapons[4] + " damage\\n'" + weapons[5] + "', " + weapons[6] + " damage\\n'Bare Hands', " + attack + " damage")
+                                inputs("The input is case sensitive. keep that in mind\\n")
+                            if playerInput == str(weapons[1]):
+                                atk(weapons[2])
+                            elif playerInput == str(weapons[3]):
+                                atk(weapons[4])
+                            elif playerInput == str(weapons[5]):
+                                atk(weapons[6])
+                            elif playerInput == "Bare Hands":
+                                atk(attack)
+                    case 4:
+                        print("Enter the weapon name to attack with that weapon. Your weapons are listed below:\\n'" + weapons[1] + "', " + weapons[2] + " damage\\n'" + weapons[3] + "', " + weapons[4] + " damage\\n'" + weapons[5] + "', " + weapons[6] + " damage\\n'" + weapons[7] + "', " + weapons[8] + " damage\\n'Bare Hands', " + attack + " damage")
+                        inputs("The input is case sensitive. keep that in mind\\n")
+                        if playerInput == str(weapons[1]):
+                            atk(weapons[2])
+                        elif playerInput == str(weapons[3]):
+                            atk(weapons[4])
+                        elif playerInput == str(weapons[5]):
+                            atk(weapons[6])
+                        elif playerInput == str(weapons[7]):
+                            atk(weapons[8])
+                        elif playerInput == "Bare Hands":
+                            atk(attack)
+                        else:
+                            while playerInput != str(weapons[1]) and playerInput != str(weapons[3]) and playerInput != str(weapons[5]) and playerInput != str(weapons[7]):
+                                print("Enter the weapon name to attack with that weapon. Your weapons are listed below:\\n'" + weapons[1] + "', " + weapons[2] + " damage\\n'" + weapons[3] + "', " + weapons[4] + " damage\\n'" + weapons[5] + "', " + weapons[6] + " damage\\n'" + weapons[7] + "', " + weapons[8] + " damage\\n'Bare Hands', " + attack + " damage")
+                                inputs("The input is case sensitive. keep that in mind\\n")
+                            if playerInput == str(weapons[1]):
+                                atk(weapons[2])
+                            elif playerInput == str(weapons[3]):
+                                atk(weapons[4])
+                            elif playerInput == str(weapons[5]):
+                                atk(weapons[6])
+                            elif playerInput == str(weapons[7]):
+                                atk(weapons[8])
+                            elif playerInput == "Bare Hands":
+                                atk(attack)
+            turn = 1
+        case "Defend":
+            if opponentStats[6] == 1:
+                match shields[0]:
+                    case 0:
+                        print("You do not have any defensive instruments, as such you will use your base defense")
+                        defendAttack(defense)
+                    case 1:
+                        print("Which defensive instrument would you like to defend with?")
+                        print("Enter the name of the defensive instrument you would like to defend with. Your defensive instruments are listed below:\\n'" + shields[1] + "', " + shields[2] + " damage\\n'Bare Hands', " + attack + " damage")
+                        inputs("The input is case sensitive. Keep that in mind\\n")
+                        if playerInput == str(shields[1]):
+                            defendAttack(shields[2])
+                        elif playerInput == "Bare Hands":
+                            defendAttack(defense)
+                        else:
+                            while playerInput != str(shields[1]) and playerInput != "Bare Hands":
+                                print("Enter the name of the defensive instrument you would like to defend with. Your defensive instruments are listed below:\\n'" + shields[1] + "', " + shields[2] + " damage\\n'Bare Hands', " + attack + " damage")
+                                inputs("The input is case sensitive. Keep that in mind\\n")
+                            if playerInput == str(shields[1]):
+                                defendAttack(shields[2])
+                            elif playerInput == "Bare Hands":
+                                defendAttack(defense)
+                    case 2:
+                        print("Which defensive instrument would you like to defend with?")
+                        print("Enter the name of the defensive instrument you would like to defend with. Your defensive instruments are listed below:\\n'" + shields[1] + "', " + shields[2] + " damage\\n'" + shields[3] + "', " + shields[4] + "' damage\\n'Bare Hands', " + attack + " damage")
+                        inputs("The input is case sensitive. Keep that in mind\\n")
+                        if playerInput == str(shields[1]):
+                            defendAttack(shields[2])
+                        elif playerInput == str(shields[3]):
+                            defendAttack(shields[4])
+                        elif playerInput == "Bare Hands":
+                            defendAttack(defense)
+                        else:
+                            while playerInput != str(shields[1]) and playerInput != str(shields[3]) and playerInput != "Bare Hands":
+                                print("Enter the name of the defensive instrument you would like to defend with. Your defensive instruments are listed below:\\n'" + shields[1] + "', " + shields[2] + " damage\\n'" + shields[3] + "', " + shields[4] + "' damage\\n'Bare Hands', " + attack + " damage")
+                                inputs("The input is case sensitive. Keep that in mind\\n")
+                            if playerInput == str(shields[1]):
+                                defendAttack(shields[2])
+                            elif playerInput == str(shields[3]):
+                                defendAttack(shields[4])
+                            elif playerInput == "Bare Hands":
+                                defendAttack(defense)
+                    case 3:
+                        print("Which defensive instrument would you like to defend with?")
+                        print("Enter the name of the defensive instrument you would like to defend with. Your defensive instruments are listed below:\\n'" + shields[1] + "', " + shields[2] + " damage\\n'" + shields[3] + "', " + shields[4] + "' damage\\n'" + shields[5] + "', " + shields[6] + "damage\\n'Bare Hands', " + attack + " damage")
+                        inputs("The input is case sensitive. Keep that in mind\\n")
+                        if playerInput == str(shields[1]):
+                            defendAttack(shields[2])
+                        elif playerInput == str(shields[3]):
+                            defendAttack(shields[4])
+                        elif playerInput == str(shields[5]):
+                            defendAttack(shields[6])
+                        elif playerInput == "Bare Hands":
+                            defendAttack(defense)
+                        else:
+                            while playerInput != str(shields[1]) and playerInput != str(shields[3]) and playerInput != str(shields[5]) and playerInput != "Bare Hands":
+                                print("Enter the name of the defensive instrument you would like to defend with. Your defensive instruments are listed below:\\n'" + shields[1] + "', " + shields[2] + " damage\\n'" + shields[3] + "', " + shields[4] + "' damage\\n'" + shields[5] + "', " + shields[6] + "damage\\n'Bare Hands', " + attack + " damage")
+                                inputs("The input is case sensitive. Keep that in mind\\n")
+                            if playerInput == str(shields[1]):
+                                defendAttack(shields[2])
+                            elif playerInput == str(shields[3]):
+                                defendAttack(shields[4])
+                            elif playerInput == str(shields[5]):
+                                defendAttack(shields[6])
+                            elif playerInput == "Bare Hands":
+                                defendAttack(defense)
+                    
+                turn = 1
+            else:
+                print("You attempt to block a non-existant attack")
+        case "Block":
+            if opponentStats[6] == 1:
+                defendAttack(defense)
+                turn = 1
+            else:
+                print("You attempt to block a non-existant attack")
+        case "Flee":
+            if turn != 2:
+                if random.randint(0,20) < observation:
+                    print("You have successfully fled.")
+                    turn = 1
+                else:
+                    print("You have failed to flee, and take 1 damage")
+                    health -= 1
+                    print("Hint: upgrading your 'Observation' stat helps you flee more")
+            else:
+                print("You currently cannot flee")
+    moveInput = playerInput.split(" ")
+    #if len(moveInput) > 1:
+        #match moveInput[0]:
+            #case "Buy":
+                
+def fight(opponent):
+    line = ""
+    a = 0
+    global playerInput
+    match opponent:
+        case "training":
+            with open(filePath + "//opponents//" + "training.txt", "r", encoding = "utf-8") as training:
+                line = training.read().split("\\n")
+                for i in range(0,len(line)):    
+                    scroll_text(line[a],"\\n",0.025)
+                    a += 1
+                    time.sleep(1)
+                gameLoop(0)
+def gameLoop(t):
+    turnNum = 0
+    match t:
+        case 0: # main loop
+            for i in range(0,2):
+                time.sleep(0.25)
+                print(".")
+            with open(filePath + "//" + "gameSequence.txt", "r", encoding = "utf-8") as gameText:
+                gamePrompts = gameText.read().split("\\n")
+                if turnNum == 0:
+                    scroll_text(gamePrompts[1],"\\n", 0.025)
+                else:
+                    if random.randint(0,1) == 1:
+                        match random.randint(0,3):
+                            case 0:
+                                    scroll_text(gamePrompts[3], "\\n", 0.025)
+                            case 2:
+                                    a = gamePrompts[5].split("_")
+                                    scroll_text(a[1] + random.randint(1,23), "\\n", 0.025)
+                                    mainInputs()
+                            case 1:
+                                    b = open(filePath + "//" + "weapons.txt").split("\\n")
+                                    c = random.randint(1,13)
+                                    a = gamePrompts[4].split("_")
+                                    c -= 1
+                                    scroll_text(a[1] + b[c], "\\n", 0.025)
+                                    mainInputs()
+                            case 3:
+                                scroll_text(gamePrompts[6], "\\n", 0.025)
+                inputs("")
+        case 1: # for the beginning of the game when learning how the game works
+            gameText = open(filePath + "//" + "gameSequence.txt", "r")
+            gameText = gameText.read().split("\\n")
+            gameStats(gameText[0])
+            if name == "46656D626F7973344C696665":
+                gameLoop(0)
+            elif name == "3F61766E73":
+                gameLoop(0)
+            else:
+                fight("training")
+
+def inputs(text): # gets an input
+    global playerInput
+    playerInput = input(text)
+    if playerInput == "print":
+        modulus.uPrint(playerInput)
+
+def gameStats(line): # prints the stats and the prompt
+    global statsTimer
+    statsTimer += 1
+    if statsTimer >= 5:
+        print("Hp : " + str(health) + " | Obs : " + str(observation) + " | Atk : " + str(attack) + " | Pr : " + str(priority) + " | Def : " + str(defense) + " | Player : " + name)
+        statsTimer = 0
+    scroll_text(str(line),"\\n",0.025)'''
+weaponsTXT = '''Sword 4 50
+Long_Sword 4.5 60
+Short_Sword 3.5 50
+Spear 5 40
+Quarter_Staff 1 100
+Bow 2 25
+Throwing_Knife 1 1
+Blow_Dart (1) 1
+Sling_Shot 1 25
+Knife 1 10
+Club 2 20
+Mace 4 50
+Spiked_Shield 1 100'''
+def create(filepath, filename, contents):
+    if not os.path.exists(filepath):
+        os.makedirs(filepath)
+        print(f'{filepath} directory created')
+    f = open(filepath + filename, "w", encoding="utf-8")
+    f.write(contents)
+    print(f'file \'{filepath}\' has been created')
+
+def createProject(project):
+    '''
+    filepath is for an additional file path, such as having an additional folder for the project
+    '''
+    match project:
+        case "Command Line Interface":
+            create(filePath + "Command Line Interface", "//main.py", str(cliPY))
+            create(filePath + "Command Line Interface", "//cliYap.txt", str(cliYapTXT))
+            create(filePath + "Command Line Interface", "//scenario_01_config.txt", str(scenario_01_configTXT))
+            create(filePath + "Command Line Interface", "//scenario_01_readme.txt", str(scenario_01_readmeTXT))
+            create(filePath + "Command Line Interface", "//scenario_02_config.txt", str(scenario_02_configTXT))
+            create(filePath + "Command Line Interface", "//scenario_02_readme.txt", str(scenario_02_readmeTXT))
+            create(filePath + "Command Line Interface", "//scenario_03_config.txt", str(scenario_03_configTXT))
+            create(filePath + "Command Line Interface", "//scenario_03_readme.txt", str(scenario_03_readmeTXT))
+            create(filePath + "Command Line Interface", "//README.txt", str(cliReadMeTXT))
+        case "Text Based Game":
+            create(filePath + "Text Based Game", "//main.py", str(textBasedGamePY))
+
+print(f'{ntpath.dirname(sys.argv[0]) + "//" + ntpath.basename(sys.argv[0])} has launched successfully')
+createProject(input())
+        <br/>
+        <div id="footerGradient"></div>
+        <div class="footer">
+            <div class="row">
+                <div>
+                    <h2>Contact</h2>
+                    Discord: s1ngles0ck
+                    <br/>
+                    Email: [not provided]
+                </div>
+                <div>
+                    <h2>Hyperlinks</h2>
+                    <div class="column">
+                        <a href="projects.html">Projects</a>
+                        <a href="index.html">Index</a>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div>
+                Site made by ?avns
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,24 @@
+.comment {
+    color: rgb(0, 98, 0);
+}
+.modules {
+    color: rgb(0,64,0);
+}
+.string {
+    color: rgb(255, 166, 0);
+}
+.functions {
+    color: rgb(255, 255, 0);
+}
+.vars {
+    color: rgb(0, 255, 255);
+}
+html, body {
+    margin: 0;
+    font-family: "JetBrains mono", monospace;
+}
+.taa {
+    background-color: rgb(180,180,180);
+    border: 2px solid gray;
+    font-family: 'Courier New', Courier, monospace;
+}
